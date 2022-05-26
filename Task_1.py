@@ -9,8 +9,9 @@ def healthz():
     return ''
 
 
-@app.route("/accounts")
-def accounts():
+@app.route("/accounts/<id>")
+def accounts(id):
+    ih = int(id)
     d = {
   "accounts": [
     { "id": "0", "firstname": "Pooh", "lastname": "Shiesty" },
@@ -18,6 +19,10 @@ def accounts():
     { "id": "2", "firstname": "Vitalik", "lastname": "Buterin" }
   ]
 }
-    return jsonify(d)
-if __name__ == '__main__':
-    app.run(port=8080)
+    if not ih>-1:
+        return jsonify(d)
+    else: 
+        j = d['accounts'][ih]
+        return jsonify(j)
+
+app.run(port=8080)
