@@ -21,6 +21,8 @@ def accounts(id):
 }
     if not ih>-1:
         return jsonify(d)
+    elif not ih in d['accounts']:
+        return jsonify('404 Not Found')
     else: 
         j = d['accounts'][ih]
         return jsonify(j)
