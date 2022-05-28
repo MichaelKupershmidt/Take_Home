@@ -12,7 +12,7 @@
 
 def calculate(endpoint, prevnum=0, n=0):
 	if n == endpoint:
-		if endpoint<6:
+		if endpoint<11:
 			return prevnum + n**n
 		else:
 			return prevnum + last(n)
