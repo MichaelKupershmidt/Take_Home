@@ -22,9 +22,23 @@ def accounts(id):
     if not ih>-1:
         return jsonify(d)
     elif not ih in d['accounts']:
-        return jsonify('404 Not Found')
+        return "",404
     else: 
         j = d['accounts'][ih]
         return jsonify(j)
 
 app.run(port=8080)
+
+
+
+#not sure if this is also potential answer for level 2
+    # try:
+    #     ih = int(id)
+        
+    #     if not ih>-1:
+    #         return jsonify(d)
+    #     else: 
+    #         j = d['accounts'][ih]
+    #         return jsonify(j)
+    # except Exception:
+    #     raise abort(404)
