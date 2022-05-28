@@ -2,6 +2,13 @@ import flask
 from flask import jsonify, abort, request, make_response
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
+def getList(dict):
+    list = []
+    for key in dict.keys():
+        list.append(key)
+          
+    return list
+
 d = {
   "accounts": [
     { "id": "0", "firstname": "Pooh", "lastname": "Shiesty" },
@@ -35,14 +42,16 @@ def accounts_update(id):
             j = d['accounts'][ih]
         except Exception:
             raise abort(404)
-        try:
-            for key in j.keys():
-                j[key] = data[key]
-            d['accounts'][ih] = j
-            return make_response(jsonify(d), 200)
+        keys = getList(data)
+        for k in keys:
+            if k not in j:
+                raise abort(400)
+        for key in data.keys():
+            j[key] = data[key]
+        d['accounts'][ih] = j
+        return make_response(jsonify(d), 200)
 
-        except Exception:
-            raise abort(400)
+
 
 
 app.run(port=8080)
@@ -50,15 +59,15 @@ app.run(port=8080)
 
 # curl localhost:8080/accounts/0 
 
-# curl -v -X POST localhost:8080/accounts/0/update -d '{ "abc": "xyz" } 
+# curl -v -X POST localhost:8080/accounts/0/update -d "{ \"abc\": \"xyz\" }" 
 
 # curl -v -X POST localhost:8080/accounts/0/update -d "{ \"firstname\": \"John\", \"lastname\": \"Smith\" }" 
 
 # curl localhost:8080/accounts/0 
 
-# curl -v -X POST localhost:8080/accounts/0/update -d '{ "firstname": "Jane" } 
+# curl -v -X POST localhost:8080/accounts/0/update -d "{ \"firstname\": \"Jane\" }"
 
 # curl localhost:8080/accounts/0 
-# curl -v -X POST localhost:8080/accounts/0/update -d '{ "lastname": "Doe" }
+# curl -v -X POST localhost:8080/accounts/0/update -d "{ \"lastname\": \"Doe\" }"
 
 # curl localhost:8080/accounts/0 
