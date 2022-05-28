@@ -1,9 +1,5 @@
 import flask
 from flask import jsonify, abort, request, make_response
-import json
-def Convert(lst):
-    res_dct = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)}
-    return res_dct
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 d = {
@@ -35,7 +31,6 @@ def accounts_update(id):
     if request.method == 'POST':
         try:
             data = request.get_json(force=True)
-            data = Convert(data)
             ih = int(id)
             j = d['accounts'][ih]
         except Exception:
@@ -49,15 +44,6 @@ def accounts_update(id):
         except Exception:
             raise abort(400)
 
-@app.route('/post', methods=['POST'])
-def post_route():
-    if request.method == 'POST':
-
-        data = dict(request.get_json(force=True))
-        #data.json()
-        data = Convert(data)
-        #print('Data Received: "{data}"'.format(data=data))
-        return "Request Processed.\n"
 
 app.run(port=8080)
 
